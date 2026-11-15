@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="theme-color" content="#0c1116"/>
+  <meta name="description" content="Plan a paper MUSD loan against BTC collateral and stress-test price scenarios."/>
+  <title>Borrow | paperTerminal.trade</title>
+  <link rel="icon" href="logo.svg" type="image/svg+xml"/>
+  <script>document.documentElement.dataset.theme=localStorage.getItem('paperterminal_theme')||'dark';</script>
+  <link rel="stylesheet" href="css/mezo-dashboard.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html"><img src="logo.svg" alt=""/><span>paperTerminal<span class="trade">.trade</span></span></a>
+    <nav class="navlinks" aria-label="Main navigation">
+      <a href="index.html">Overview</a><a class="active" href="borrow.html">Borrow</a><a href="lend.html">Lend</a><a href="portfolio.html">Portfolio</a><a href="docs.html">Docs</a>
+    </nav>
+    <div class="top-actions">
+      <span class="mode-chip">PAPER MODE</span>
+      <button class="btn theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode" title="Switch to light mode"><svg class="theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg><svg class="theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" hidden><path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5 8.5 8.5 0 1 0 20.5 15.5Z"/></svg><span id="theme-label">Light mode</span></button>
+      <button class="btn" id="connect-wallet" type="button">Connect wallet</button>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="page-heading"><div><div class="eyebrow">Borrow · Mezo</div><h1>Plan a MUSD loan.</h1></div><p>Estimate borrowing against paper BTC collateral, then see how price changes affect your practice loan-to-value.</p></section>
+    <section class="price-strip" aria-label="Market prices">
+      <div class="metric"><div class="metric-label">BTC spot price</div><div class="metric-value" id="btc-price">Loading</div><div class="metric-note" id="btc-source">Fetching public BTC spot price…</div></div>
+      <div class="metric"><div class="metric-label">BTC 24h change</div><div class="metric-value" id="btc-change">—</div><div class="metric-note">Public market data</div></div>
+      <div class="metric"><div class="metric-label">MUSD market price</div><div class="metric-value" id="musd-price">Loading</div><div class="metric-note"><span id="musd-source">Checking market data…</span></div></div>
+      <div class="metric"><div class="metric-label">Practice equity</div><div class="metric-value" id="equity-value">—</div><div class="metric-note">Paper positions</div></div>
+    </section>
+    <div class="workspace">
+      <div class="column">
+        <section class="section" id="borrow">
+          <div class="section-head"><div><h2>Borrow against BTC</h2><p>Practice only. No funds move.</p></div><span class="pill demo">PRACTICE</span></div>
+          <div class="form-row">
+            <div class="inline-stat"><span>BTC collateral</span><b id="portfolio-btc">—</b></div>
+            <div class="inline-stat"><span>Collateral value</span><b id="collateral-value">—</b></div>
+            <div class="inline-stat"><span>MUSD borrowed</span><b id="debt-value">—</b></div>
+          </div>
+          <form id="borrow-form">
+            <label class="input-label" for="borrow-amount">Borrow amount</label>
+            <div class="input-wrap"><input id="borrow-amount" type="number" min="1" step="1" placeholder="0.00" inputmode="decimal"/><span>paper MUSD</span></div>
+            <div class="action-row"><button class="btn btn-primary" type="submit">Record paper loan</button><span class="pill" id="btc-status">LOADING</span></div>
+          </form>
+          <div class="section-head" style="margin:20px 0 0"><div><h2 style="font-size:13px">Repay</h2><p id="repay-input-hint">—</p></div></div>
+          <form id="repay-form">
+            <label class="input-label" for="repay-amount">Repayment amount</label>
+            <div class="input-wrap"><input id="repay-amount" type="number" min="1" step="1" placeholder="0.00" inputmode="decimal"/><span>paper MUSD</span></div>
+            <div class="action-row"><button class="btn" type="submit">Record repayment</button></div>
+          </form>
+          <div class="section-head" style="margin:20px 0 0"><div><h2 style="font-size:13px">Adjust BTC collateral</h2><p id="collateral-input-hint">—</p></div></div>
+          <label class="input-label" for="collateral-amount">BTC amount</label>
+          <div class="input-wrap"><input id="collateral-amount" type="number" min="0.00000001" step="0.00000001" placeholder="0.00000000" inputmode="decimal"/><span>paper BTC</span></div>
+          <div class="action-row"><button class="btn" id="add-collateral" type="button">Add collateral</button><button class="btn btn-quiet" id="remove-collateral" type="button">Remove collateral</button></div>
+          <p class="fine-print">Practice borrowing limit: 50% LTV. Actual terms depend on the lender and product.</p>
+        </section>
+      </div>
+      <div class="column">
+        <section class="section" aria-labelledby="risk-title"><div class="section-head"><div><h2 id="risk-title">Price scenarios</h2><p>How BTC price changes affect your practice LTV.</p></div><span class="pill demo">PRACTICE</span></div><div class="risk-list" id="risk-scenarios"></div><p class="risk-caption">Current LTV: <strong id="current-ltv">—</strong>. Color bands are visual guides, not liquidation thresholds.</p></section>
+        <section class="section"><div class="section-head"><div><h2>Market references</h2><p>Prices are informational, not protocol oracles.</p></div></div><div class="data-state"><strong>MUSD market quote</strong><span id="musd-market-detail">Market price is not used in practice loan calculations.</span></div></section>
+      </div>
+    </div>
+    <p class="disclaimer">Practice only. Balances are fictional; no BTC or MUSD moves.</p>
+    <footer><span>paperTerminal.trade · Bitcoin credit on Mezo</span><span id="network-status">Practice mode · no transactions</span></footer>
+  </main>
+
+  <div class="wallet-modal" id="wallet-modal" role="dialog" aria-modal="true" aria-labelledby="wallet-modal-title"><div class="wallet-dialog"><div class="wallet-dialog-head"><div><div class="eyebrow">Wallet</div><h2 id="wallet-modal-title">Connect wallet</h2></div><button class="btn btn-quiet" id="close-wallet" type="button" aria-label="Close wallet dialog">Close</button></div><p>See your wallet address. Borrowing remains in practice mode.</p><button class="wallet-choice" id="connect-injected" type="button"><span>Browser wallet</span><small>MetaMask or compatible</small></button><button class="wallet-choice" id="disconnect-wallet" type="button"><span>Disconnect</span><small>Hide this address</small></button></div></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/mezo-dashboard.js"></script>
+</body>
+</html>

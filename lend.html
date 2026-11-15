@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="theme-color" content="#0c1116"/>
+  <meta name="description" content="Compare live fixed-term MUSD lender offers on Mezo testnet and try a local practice allocation."/>
+  <title>Lend | paperTerminal.trade</title>
+  <link rel="icon" href="logo.svg" type="image/svg+xml"/>
+  <script>document.documentElement.dataset.theme=localStorage.getItem('paperterminal_theme')||'dark';</script>
+  <link rel="stylesheet" href="css/mezo-dashboard.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html"><img src="logo.svg" alt=""/><span>paperTerminal<span class="trade">.trade</span></span></a>
+    <nav class="navlinks" aria-label="Main navigation"><a href="index.html">Overview</a><a href="borrow.html">Borrow</a><a class="active" href="lend.html">Lend</a><a href="portfolio.html">Portfolio</a><a href="docs.html">Docs</a></nav>
+    <div class="top-actions"><span class="mode-chip">PAPER MODE</span><button class="btn theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode" title="Switch to light mode"><svg class="theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg><svg class="theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" hidden><path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5 8.5 8.5 0 1 0 20.5 15.5Z"/></svg><span id="theme-label">Light mode</span></button><button class="btn" id="connect-wallet" type="button">Connect wallet</button></div>
+  </header>
+  <main class="page">
+    <section class="page-heading"><div><div class="eyebrow">Lend · Mezo testnet</div><h1>Compare fixed-term MUSD offers.</h1></div><p>See open lender rates by Thursday due date. Test MUSD has no monetary value.</p></section>
+    <section class="price-strip" aria-label="Market prices"><div class="metric"><div class="metric-label">MUSD market price</div><div class="metric-value" id="musd-price">Loading</div><div class="metric-note"><span id="musd-source">Checking market data…</span> · <a href="https://www.geckoterminal.com/mezo/tokens/0xdd468a1ddc392dcdbef6db6e34e89aa338f9f186" target="_blank" rel="noopener noreferrer">Market</a></div></div><div class="metric"><div class="metric-label">Paper MUSD cash</div><div class="metric-value" id="cash-value">—</div><div class="metric-note">Practice balance</div></div><div class="metric"><div class="metric-label">Practice allocation</div><div class="metric-value" id="vault-value">—</div><div class="metric-note">No yield added</div></div><div class="metric"><div class="metric-label">Market</div><div class="metric-value">Doji</div><div class="metric-note">Mezo testnet</div></div></section>
+    <div class="workspace">
+      <div class="column">
+        <section class="section">
+          <div class="section-head"><div><h2>Upcoming due dates</h2><p>Best open rate and MUSD still available for each Thursday.</p></div><span class="pill demo">MEZO TESTNET</span></div>
+          <div class="data-state"><strong>Practice market view.</strong> Rates are fixed-term lender offers, not savings-vault APY. Test MUSD has no monetary value.</div>
+          <div class="term-offers-head"><span id="doji-offers-status">Loading testnet offers…</span><a href="https://www.dojis.site/lend" target="_blank" rel="noopener noreferrer">Open Doji ↗</a></div>
+          <div class="term-offers" id="doji-offers" aria-live="polite"><div class="data-state">Loading the next four due dates…</div></div>
+        </section>
+      </div>
+      <div class="column">
+        <section class="section"><div class="section-head"><div><h2>Practice allocation</h2><p>Sample MUSD shares at 1:1, with no yield.</p></div><span class="pill demo">PRACTICE</span></div>
+          <form id="vault-deposit-form"><label class="input-label" for="vault-deposit">Allocate paper MUSD <span id="vault-cash-hint"></span></label><div class="input-wrap"><input id="vault-deposit" type="number" min="1" step="1" placeholder="0.00" inputmode="decimal"/><span>paper MUSD</span></div><div class="action-row"><button class="btn btn-primary" type="submit">Add allocation</button></div></form>
+          <form id="vault-withdraw-form" style="margin-top:12px"><label class="input-label" for="vault-withdraw">Withdraw practice shares <span id="vault-holdings-hint"></span></label><div class="input-wrap"><input id="vault-withdraw" type="number" min="1" step="1" placeholder="0.00" inputmode="decimal"/><span>practice shares</span></div><div class="action-row"><button class="btn" type="submit">Withdraw</button></div></form>
+        </section>
+        <section class="section"><div class="section-head"><div><h2>About the rate</h2><p>Fixed-term offers</p></div></div><p class="fine-print">Each rate applies to its listed due date. Offer amounts and rates can change as lenders post or borrowers take offers. Open Doji to view the live market details.</p><div class="action-row"><a class="btn" href="https://www.dojis.site/lend" target="_blank" rel="noopener noreferrer">Open Doji Lend ↗</a></div></section>
+      </div>
+    </div>
+    <p class="disclaimer">The offer board reads Mezo testnet contracts. All allocation actions on paperTerminal are fictional and do not move funds.</p>
+    <footer><span>paperTerminal.trade · Bitcoin credit on Mezo</span><span id="network-status">Practice mode · no transactions</span></footer>
+  </main>
+  <div class="wallet-modal" id="wallet-modal" role="dialog" aria-modal="true" aria-labelledby="wallet-modal-title"><div class="wallet-dialog"><div class="wallet-dialog-head"><div><div class="eyebrow">Wallet</div><h2 id="wallet-modal-title">Connect wallet</h2></div><button class="btn btn-quiet" id="close-wallet" type="button" aria-label="Close wallet dialog">Close</button></div><p>See your wallet address. Lend actions on paperTerminal remain in practice mode.</p><button class="wallet-choice" id="connect-injected" type="button"><span>Browser wallet</span><small>MetaMask or compatible</small></button><button class="wallet-choice" id="disconnect-wallet" type="button"><span>Disconnect</span><small>Hide this address</small></button></div></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/mezo-dashboard.js"></script><script type="module" src="js/doji-offers.js"></script>
+</body>
+</html>

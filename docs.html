@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="theme-color" content="#0c1116"/>
+  <meta name="description" content="How paperTerminal helps people explore Mezo's Bitcoin-backed MUSD credit markets with live testnet offers and a local practice account."/>
+  <title>Docs | paperTerminal.trade</title>
+  <link rel="icon" href="logo.svg" type="image/svg+xml"/>
+  <script>document.documentElement.dataset.theme=localStorage.getItem('paperterminal_theme')||'dark';</script>
+  <link rel="stylesheet" href="css/mezo-dashboard.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html#overview"><img src="logo.svg" alt=""/><span>paperTerminal<span class="trade">.trade</span></span></a>
+    <nav class="navlinks" aria-label="Main navigation">
+      <a href="index.html#overview">Overview</a>
+      <a href="borrow.html">Borrow</a>
+      <a href="lend.html">Lend</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a class="active" href="docs.html">Docs</a>
+    </nav>
+    <div class="top-actions">
+      <span class="mode-chip">PAPER MODE</span>
+      <button class="btn theme-toggle" id="docs-theme-toggle" type="button" aria-label="Switch to light mode" title="Switch to light mode">
+        <svg class="theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>
+        <svg class="theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" hidden><path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5 8.5 8.5 0 1 0 20.5 15.5Z"/></svg>
+        <span id="docs-theme-label">Light mode</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="page docs-page">
+    <article class="docs-article">
+      <div class="docs-kicker">Product overview · Mezo</div>
+      <h1>paperTerminal.trade: plan Bitcoin credit before you act.</h1>
+      <p class="docs-lead">paperTerminal is a market-reading and practice tool for people exploring BTC-backed MUSD credit on Mezo. It brings weekly lending offers, collateral scenarios, and a local paper account into one place.</p>
+
+      <h2>The decision</h2>
+      <p>A fixed rate is only one part of a credit decision. The due date, MUSD available, BTC collateral, and the effect of a falling BTC price all matter. Comparing those details is easier when the market and your own scenario can be viewed together.</p>
+
+      <h2>What the product does</h2>
+      <p>The dashboard reads Doji's public Mezo testnet offer markets and groups open MUSD offers by their Thursday due dates. For each date it shows the lowest open rate, the number of offers, and the MUSD still available. You can open that date on Doji to inspect the live market.</p>
+      <p>A separate practice account lets you try a paper loan, repayment, collateral change, or MUSD allocation. Price scenarios show how BTC changes affect the practice loan-to-value ratio before you make a decision elsewhere.</p>
+
+      <h2>Why Mezo</h2>
+      <p>Mezo is built around Bitcoin finance, with BTC-backed borrowing and MUSD. Doji adds fixed-term lender offers to that ecosystem. paperTerminal is designed as a planning companion for those markets, not as another lender or a replacement for the protocol.</p>
+
+      <h2>Live data and practice balances</h2>
+      <p>Fixed-term rates and offer amounts come from read-only calls to Doji's Mezo testnet CreditMarkets contracts. They describe testnet activity and can change. They are not mainnet offers or vault APY.</p>
+      <p>BTC spot price and MUSD market price are public market quotes. They can differ from Mezo's reference price. Paper balances, loan actions, repayments, and allocations are fictional and stored in your browser. The site does not custody assets or submit transactions.</p>
+
+      <h2>Where it can go</h2>
+      <p>The next step is a clearer decision workspace: compare offers across dates, save and revisit practice scenarios, and add verified read-only analytics for Mezo credit products as reliable data sources become available.</p>
+      <p class="docs-note">Current scope: public testnet offer data and local practice tools. For actual offers, use <a href="https://www.dojis.site/lend" target="_blank" rel="noopener noreferrer">Doji's Lend market</a>.</p>
+    </article>
+    <footer><span>paperTerminal.trade · Bitcoin credit on Mezo</span><a href="index.html">Back to dashboard</a></footer>
+  </main>
+
+  <script>
+    (() => {
+      const button = document.getElementById('docs-theme-toggle');
+      const label = document.getElementById('docs-theme-label');
+      const sun = document.querySelector('.theme-sun');
+      const moon = document.querySelector('.theme-moon');
+      const applyTheme = (theme) => {
+        const light = theme === 'light';
+        document.documentElement.dataset.theme = light ? 'light' : 'dark';
+        localStorage.setItem('paperterminal_theme', light ? 'light' : 'dark');
+        button.setAttribute('aria-pressed', String(light));
+        button.setAttribute('aria-label', light ? 'Switch to dark mode' : 'Switch to light mode');
+        button.title = light ? 'Switch to dark mode' : 'Switch to light mode';
+        label.textContent = light ? 'Dark mode' : 'Light mode';
+        sun.hidden = light;
+        moon.hidden = !light;
+        document.querySelector('meta[name="theme-color"]').content = light ? '#f2f5f5' : '#0c1116';
+      };
+      applyTheme(document.documentElement.dataset.theme || 'dark');
+      button.addEventListener('click', () => applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
+    })();
+  </script>
+</body>
+</html>

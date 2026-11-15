@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
+  <defs>
+    <linearGradient id="mezoBg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0c1218"/>
+      <stop offset="1" stop-color="#101a22"/>
+    </linearGradient>
+    <linearGradient id="mezoOrange" x1="10" y1="8" x2="58" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFB85B"/>
+      <stop offset="0.35" stop-color="#F49A1A"/>
+      <stop offset="0.7" stop-color="#E67D42"/>
+      <stop offset="1" stop-color="#E75D58"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="18" fill="url(#mezoBg)"/>
+  <path d="M17 53V11H34C46 11 53 18 53 29S46 47 34 47H28V53H17ZM28 37H34C40 37 43 34 43 29S40 21 34 21H28V37Z" fill="url(#mezoOrange)" fill-rule="evenodd"/>
+  <path d="M18 53V12H34C46 12 52 18 52 29S46 46 34 46H18" stroke="#F8F6F1" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+  <rect x="2" y="2" width="60" height="60" rx="18" stroke="#F49A1A" stroke-opacity="0.35" stroke-width="2"/>
+</svg>
